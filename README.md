@@ -1,7 +1,7 @@
 # First-Person-Movement-Unity-3D-Example
-<p>This project is a simple example of first-person movement in Unity 3D. It may be used as a template for other projects. Keey features are: </p>
+<p>This project is a simple example of first-person movement in Unity 3D. It may be used as a template for other projects. Key features are: </p>
 <ul>
-  <li>Multi-directional movement with WASD keys.<li>
+  <li>Multi-directional movement with WASD keys.</li>
   <li>Horizontal and vertical camera movement with mouse.</li>
   <li>Camera and movement smoothing using <a href="https://docs.unity3d.com/ScriptReference/Vector3.SmoothDamp.html">Vector3.SmoothDamp</a>.</li>
 </ul>
