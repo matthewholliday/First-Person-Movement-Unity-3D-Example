@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
 
         currentDirection = Vector2.SmoothDamp(currentDirection, targetDirection, ref currentDirectionVelocity, moveSmoothTime);
 
-        Vector3 velocity = (transform.forward * targetDirection.y + transform.right * targetDirection.x * walkSpeed);
+        Vector3 velocity = (transform.forward * targetDirection.y * walkSpeed + transform.right * targetDirection.x * walkSpeed);
 
         controller.Move(velocity * Time.deltaTime);
 
