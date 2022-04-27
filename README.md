@@ -6,7 +6,7 @@
 <div align="center">(Play mode screenshot.)</div>
 </p>
 
-<p align="center">
+<p align="center" style="margin-top:50px">
 <img src="https://user-images.githubusercontent.com/1779628/165624245-5eaf5d59-fd66-4d2f-ae19-4d776872ab20.png"/>
 <div align="center">(Editor mode screenshot.)</div>
 </p>
