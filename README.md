@@ -1,5 +1,6 @@
 # First-Person-Movement-Unity-3D-Example
-<p>This project is a simple example of first-person movement in Unity 3D. It may be used as a template for other projects. Key features are: </p>
+<p>This project is a simple example of first-person movement in Unity 3D. It may be used as a template for other projects.</p>
+<p>Key features:</p>
 <ul>
   <li>Multi-directional movement with WASD keys.</li>
   <li>Horizontal and vertical camera movement with mouse.</li>
