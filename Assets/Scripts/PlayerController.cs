@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
 
         velocityY += gravity * Time.deltaTime;
 
-        Vector3 velocity = (transform.forward * currentDirection.y + transform.right * currentDirection.x) * walkSpeed + Vector3.up * velocityY;
+        Vector3 velocity = (transform.forward * currentDirection.y + transform.right * currentDirection.x) * walkSpeed + Vector3.up * velocityY; //Note that the value of "velocityY" is negative, so Vector3.down would apply gravity in the opposite direction.
 
         controller.Move(velocity * Time.deltaTime);
 

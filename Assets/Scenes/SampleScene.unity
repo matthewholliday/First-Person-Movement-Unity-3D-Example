@@ -189,6 +189,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 1168474657}
   mouseSensitivity: 3.5
+  lockCursor: 1
+  walkSpeed: 6
+  gravity: -13
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
