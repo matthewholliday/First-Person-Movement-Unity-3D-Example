@@ -58,8 +58,11 @@ public class PlayerController : MonoBehaviour
             moveSmoothTime
         );
 
-       if (controller.isGrounded)
+        //If the CharacterController was touching the ground during the last move, "zero-out" the vertical velocity.
+        if (controller.isGrounded)
+        {
             velocityY = 0.0f;
+        }
 
         velocityY += gravity * Time.deltaTime;
 
