@@ -4,12 +4,27 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float gravity = -13.0f;
+    [Header("Camera")]
+    public Transform playerCamera = null;
+    public bool rotatePlayerBody = true;
+    public Transform verticalSwivel = null;
+    public Transform horizontalSwivel = null;
+
+    [Header("Cursor")]
+    public bool lockCursor = true;
+    public float mousePlayerRotationSensitivity = 10.0f;
+    public float mouseXCameraSensitivity = 50.0f;
+    public float mouseYCameraSensitivity = 3.5f;
+
+    [Header("Gravity")]
+    public float forceOfGravity = -13.0f;
+
+    [Header("Jumping")]
+    public bool enableJumping = true;
     public string jumpKey = "space";
     public float jumpVelocity = 10.0f;
-    public bool lockCursor = true;
-    public float mouseSensitivity = 3.5f;
-    public Transform playerCamera = null;
+
+    [Header("Walk Settings")]
     public float slopeLimit = 45.0f;
     public float walkSpeed = 6.0f;
 
@@ -77,7 +92,7 @@ public class PlayerController : MonoBehaviour
             this.velocityY = 0.0f;
 
             //Only allow the player to jump IF they are touching the ground:
-            if (Input.GetKeyDown(this.jumpKey))
+            if (this.enableJumping && Input.GetKeyDown(this.jumpKey))
             {
                 this.velocityY = ApplyJump(this.velocityY);
             }
@@ -97,7 +112,7 @@ public class PlayerController : MonoBehaviour
 
     private float ApplyGravity(float velocityY)
     {
-        return velocityY + this.gravity * Time.deltaTime;
+        return velocityY + this.forceOfGravity * Time.deltaTime;
     }
 
     private void UpdateMouseLook()
@@ -107,8 +122,21 @@ public class PlayerController : MonoBehaviour
 
         currentMouseDelta = Vector2.SmoothDamp(currentMouseDelta, targetMouseDelta, ref currentMouseDeltaVelocity, mouseSmoothTime);
 
-        this.RotateCameraVertically(ref currentMouseDelta);
-        this.RotateCameraHorizontally(ref currentMouseDelta);
+
+        if (this.rotatePlayerBody)
+        {
+            this.RotatePlayerHorizontally(ref currentMouseDelta);
+            Vector3 verticalCameraVector = this.RotateCameraVertically(ref currentMouseDelta);
+            this.playerCamera.localEulerAngles = 1 * verticalCameraVector;
+        }
+        else
+        {
+            Vector3 verticalCameraVector = this.RotateCameraVertically(ref currentMouseDelta);
+            Vector3 horizontalCameraVector = this.RotateCameraHorizontally(ref currentMouseDelta);
+            this.horizontalSwivel.Rotate(horizontalCameraVector);
+            this.verticalSwivel.localEulerAngles = verticalCameraVector;
+        }
+
     }
 
     private Vector2 getMouseDelta()
@@ -119,23 +147,29 @@ public class PlayerController : MonoBehaviour
         );
     }
 
-    private void RotateCameraVertically(ref Vector2 currentMouseDelta)
+    private Vector3 RotateCameraVertically(ref Vector2 currentMouseDelta)
     {
         /*
         Negative degrees pushes the camera UPWARDS, so we want to invert the mouse value so that the camera does not pitch in the 
         opposite direction of the cursor's movement:
         */
-        cameraPitch -= currentMouseDelta.y * mouseSensitivity;
+        cameraPitch -= currentMouseDelta.y * mouseYCameraSensitivity;
 
         //Make sure that the user cannot move the camera higher than looking straight up or looking straight down:
         cameraPitch = Mathf.Clamp(cameraPitch, -90.0f, 90.0f);
 
-        playerCamera.localEulerAngles = Vector3.right * cameraPitch;
+        return Vector3.right * cameraPitch;
     }
     
-    private void RotateCameraHorizontally (ref Vector2 currentMouseDelta)
+    private Vector3 RotateCameraHorizontally(ref Vector2 currentMouseDelta)
+    {        
+        float cameraRotation = currentMouseDelta.x * mouseXCameraSensitivity;
+        return Vector3.up * cameraRotation;
+    }
+
+    private void RotatePlayerHorizontally (ref Vector2 currentMouseDelta)
     {
         //Rotate horizontally (i.e., AROUND the up axis) using the horizontal mouse delta:
-        transform.Rotate(Vector3.up * currentMouseDelta.x * mouseSensitivity);
+        transform.Rotate(Vector3.up * currentMouseDelta.x * mousePlayerRotationSensitivity);
     }
 }
