@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float gravity = -13.0f;
+    public string jumpKey = "j";
+    public float jumpVelocity = 10.0f;
     public bool lockCursor = true;
     public float mouseSensitivity = 3.5f;
     public Transform playerCamera = null;
@@ -46,6 +48,11 @@ public class PlayerController : MonoBehaviour
         UpdateMovement();
     }
 
+    void Jump()
+    {
+        this.velocityY = this.velocityY + this.jumpVelocity;
+    }
+
     private void UpdateMovement()
     {
         //Get the direction of the input from the WASD keys:
@@ -68,7 +75,15 @@ public class PlayerController : MonoBehaviour
         if (controller.isGrounded)
         {
             velocityY = 0.0f;
+
+            //Only allow the player to jump IF they are touching the ground:
+            if (Input.GetKeyDown(this.jumpKey))
+            {
+                Jump();
+            }
         }
+
+
 
         velocityY += gravity * Time.deltaTime;
 
