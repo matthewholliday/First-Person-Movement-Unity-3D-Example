@@ -6,15 +6,25 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Camera")]
     public Transform playerCamera = null;
-    public bool rotatePlayerBody = true;
+    public bool rotatePlayerBodyWithCamera = true;
     public Transform verticalSwivel = null;
     public Transform horizontalSwivel = null;
 
     [Header("Cursor")]
     public bool lockCursor = true;
     public float mousePlayerRotationSensitivity = 10.0f;
+    public bool enableMouseXAxisControl = true;
     public float mouseXCameraSensitivity = 50.0f;
+    public bool enableMouseYAxisControl = true;
     public float mouseYCameraSensitivity = 3.5f;
+
+    [Header("Debug Settings")]
+    public bool enableDebugMode = true;
+    public bool showDirectionIndicators = true;
+    public GameObject leftDirectionIndicator = null;
+    public GameObject rightDirectionIndicator = null;
+    public GameObject forwardsDirectionIndicator = null;
+    public GameObject backwardsDirectionIndicator = null;
 
     [Header("Gravity")]
     public float forceOfGravity = -13.0f;
@@ -56,7 +66,29 @@ public class PlayerController : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = true;
         }
+
+        if (this.enableDebugMode)
+        {
+            if (this.showDirectionIndicators) {
+                this.activateDirectionIndicators();
+            }
+        }
     }
+
+    private void activateDirectionIndicators()
+    {
+        GameObject[] directionIndicators = new GameObject[] {
+            this.rightDirectionIndicator,
+            this.leftDirectionIndicator,
+            this.forwardsDirectionIndicator,
+            this.backwardsDirectionIndicator
+        };
+        foreach(GameObject directionIndicator in directionIndicators)
+        {
+            directionIndicator.SetActive(true);
+        }
+    }
+
     void Update()
     {
         UpdateMouseLook();
@@ -123,18 +155,30 @@ public class PlayerController : MonoBehaviour
         currentMouseDelta = Vector2.SmoothDamp(currentMouseDelta, targetMouseDelta, ref currentMouseDeltaVelocity, mouseSmoothTime);
 
 
-        if (this.rotatePlayerBody)
+        if (this.rotatePlayerBodyWithCamera)
         {
-            this.RotatePlayerHorizontally(ref currentMouseDelta);
-            Vector3 verticalCameraVector = this.RotateCameraVertically(ref currentMouseDelta);
-            this.playerCamera.localEulerAngles = 1 * verticalCameraVector;
+            if (this.enableMouseXAxisControl)
+            {
+                this.RotatePlayerHorizontally(ref currentMouseDelta);
+            }
+            if (this.enableMouseYAxisControl)
+            {
+                Vector3 verticalCameraVector = this.RotateCameraVertically(ref currentMouseDelta);
+                this.playerCamera.localEulerAngles = 1 * verticalCameraVector;
+            }
         }
         else
         {
-            Vector3 verticalCameraVector = this.RotateCameraVertically(ref currentMouseDelta);
-            Vector3 horizontalCameraVector = this.RotateCameraHorizontally(ref currentMouseDelta);
-            this.horizontalSwivel.Rotate(horizontalCameraVector);
-            this.verticalSwivel.localEulerAngles = verticalCameraVector;
+            if (this.enableMouseXAxisControl)
+            {
+                Vector3 horizontalCameraVector = this.RotateCameraHorizontally(ref currentMouseDelta);
+                this.horizontalSwivel.Rotate(horizontalCameraVector);
+            }
+            if (this.enableMouseYAxisControl){
+                Vector3 verticalCameraVector = this.RotateCameraVertically(ref currentMouseDelta);
+                this.verticalSwivel.localEulerAngles = verticalCameraVector;
+
+            }
         }
 
     }
