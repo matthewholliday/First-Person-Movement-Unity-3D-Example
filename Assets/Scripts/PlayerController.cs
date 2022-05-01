@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float gravity = -13.0f;
-    public string jumpKey = "j";
+    public string jumpKey = "space";
     public float jumpVelocity = 10.0f;
     public bool lockCursor = true;
     public float mouseSensitivity = 3.5f;
@@ -48,9 +48,9 @@ public class PlayerController : MonoBehaviour
         UpdateMovement();
     }
 
-    void Jump()
+    private float ApplyJump(float velocityY)
     {
-        this.velocityY = this.velocityY + this.jumpVelocity;
+        return this.velocityY + this.jumpVelocity;
     }
 
     private void UpdateMovement()
@@ -74,18 +74,16 @@ public class PlayerController : MonoBehaviour
         //If the CharacterController was touching the ground during the last move, "zero-out" the vertical velocity.
         if (controller.isGrounded)
         {
-            velocityY = 0.0f;
+            this.velocityY = 0.0f;
 
             //Only allow the player to jump IF they are touching the ground:
             if (Input.GetKeyDown(this.jumpKey))
             {
-                Jump();
+                this.velocityY = ApplyJump(this.velocityY);
             }
         }
 
-
-
-        velocityY += gravity * Time.deltaTime;
+        this.velocityY = ApplyGravity(this.velocityY);
 
         Vector3 velocity = (
             (transform.forward * currentDirection.y * walkSpeed) + //Apply the forwards/backwards velocity.
@@ -96,6 +94,12 @@ public class PlayerController : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
 
     }
+
+    private float ApplyGravity(float velocityY)
+    {
+        return velocityY + this.gravity * Time.deltaTime;
+    }
+
     private void UpdateMouseLook()
     {
         //Get the position of the cursor:

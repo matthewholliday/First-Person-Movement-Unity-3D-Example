@@ -188,11 +188,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravity: -13
+  jumpKey: space
+  jumpVelocity: 10
   lockCursor: 1
   mouseSensitivity: 3.5
   playerCamera: {fileID: 1168474657}
-  slopeLimit: 180
-  walkSpeed: 50
+  slopeLimit: 45
+  walkSpeed: 6
 --- !u!1 &614007353
 GameObject:
   m_ObjectHideFlags: 0
