@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public Transform playerCamera = null;
-    public float mouseSensitivity = 3.5f;
-    public bool lockCursor = true;
-    public float walkSpeed = 6.0f;
     public float gravity = -13.0f;
+    public bool lockCursor = true;
+    public float mouseSensitivity = 3.5f;
+    public Transform playerCamera = null;
+    public float slopeLimit = 45.0f;
+    public float walkSpeed = 6.0f;
 
     [Range(0.0f, 0.5f)] float moveSmoothTime = .25f;
     [Range(0.0f, 0.05f)] float mouseSmoothTime = .25f;
@@ -26,7 +27,12 @@ public class PlayerController : MonoBehaviour
     
     void Start()
     {
+        //Retrieve the CharacterController from the current GameObject:
+        //TODO: Throw an error if the current GameObject does NOT contain a valid CharacterController.
         controller = GetComponent<CharacterController>();
+
+        //Set the slope limit to what is configured in the Inspector:
+        controller.slopeLimit = this.slopeLimit;
         
         if (lockCursor)
         {
@@ -66,7 +72,11 @@ public class PlayerController : MonoBehaviour
 
         velocityY += gravity * Time.deltaTime;
 
-        Vector3 velocity = (transform.forward * currentDirection.y + transform.right * currentDirection.x) * walkSpeed + Vector3.up * velocityY; //Note that the value of "velocityY" is negative, so Vector3.down would apply gravity in the opposite direction.
+        Vector3 velocity = (
+            (transform.forward * currentDirection.y * walkSpeed) + //Apply the forwards/backwards velocity.
+            (transform.right * currentDirection.x * walkSpeed) + //Apply the left/right velocity
+            (Vector3.up * velocityY) //The value of "velocityY" is negative, so Vector3.down would apply gravity in the opposite direction.
+            ); 
 
         controller.Move(velocity * Time.deltaTime);
 
@@ -74,18 +84,23 @@ public class PlayerController : MonoBehaviour
     private void UpdateMouseLook()
     {
         //Get the position of the cursor:
-        Vector2 targetMouseDelta = new Vector2(
-            Input.GetAxis("Mouse X"),
-            Input.GetAxis("Mouse Y")
-        );
+        Vector2 targetMouseDelta = getMouseDelta();
 
         currentMouseDelta = Vector2.SmoothDamp(currentMouseDelta, targetMouseDelta, ref currentMouseDeltaVelocity, mouseSmoothTime);
 
-        this.RotateCameraVertically(ref targetMouseDelta, ref currentMouseDelta);
-        this.RotateCameraHorizontally(ref targetMouseDelta, ref currentMouseDelta);
+        this.RotateCameraVertically(ref currentMouseDelta);
+        this.RotateCameraHorizontally(ref currentMouseDelta);
     }
 
-    private void RotateCameraVertically(ref Vector2 targetMouseDelta, ref Vector2 currentMouseDelta)
+    private Vector2 getMouseDelta()
+    {
+        return new Vector2(
+            Input.GetAxis("Mouse X"),
+            Input.GetAxis("Mouse Y")
+        );
+    }
+
+    private void RotateCameraVertically(ref Vector2 currentMouseDelta)
     {
         /*
         Negative degrees pushes the camera UPWARDS, so we want to invert the mouse value so that the camera does not pitch in the 
@@ -99,7 +114,7 @@ public class PlayerController : MonoBehaviour
         playerCamera.localEulerAngles = Vector3.right * cameraPitch;
     }
     
-    private void RotateCameraHorizontally (ref Vector2 targetMouseDelta, ref Vector2 currentMouseDelta)
+    private void RotateCameraHorizontally (ref Vector2 currentMouseDelta)
     {
         //Rotate horizontally (i.e., AROUND the up axis) using the horizontal mouse delta:
         transform.Rotate(Vector3.up * currentMouseDelta.x * mouseSensitivity);
