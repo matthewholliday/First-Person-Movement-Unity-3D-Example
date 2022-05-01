@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
     public Transform verticalSwivel = null;
     public Transform horizontalSwivel = null;
 
+    [Header("Character Controller")]
+    public CharacterController controller = null;
+
     [Header("Cursor")]
     public bool lockCursor = true;
     public float mousePlayerRotationSensitivity = 10.0f;
@@ -45,7 +48,6 @@ public class PlayerController : MonoBehaviour
 
     private float cameraPitch = 0.0f;
     private float velocityY = 0.0f;
-    CharacterController controller = null;
 
     Vector2 currentDirection = Vector2.zero;
     Vector2 currentDirectionVelocity = Vector2.zero;
@@ -58,7 +60,6 @@ public class PlayerController : MonoBehaviour
     {
         //Retrieve the CharacterController from the current GameObject:
         //TODO: Throw an error if the current GameObject does NOT contain a valid CharacterController.
-        controller = GetComponent<CharacterController>();
 
         //Set the slope limit to what is configured in the Inspector:
         controller.slopeLimit = this.slopeLimit;
