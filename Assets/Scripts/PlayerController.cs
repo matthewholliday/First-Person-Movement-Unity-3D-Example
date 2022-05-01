@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [Header("Camera")]
+    public float minimumVerticalClamp = -30.0f;
+    public float maximumVerticalClamp = 30.0f;
     public Transform playerCamera = null;
     public bool rotatePlayerBodyWithCamera = true;
     public Transform verticalSwivel = null;
@@ -164,7 +166,7 @@ public class PlayerController : MonoBehaviour
             if (this.enableMouseYAxisControl)
             {
                 Vector3 verticalCameraVector = this.RotateCameraVertically(ref currentMouseDelta);
-                this.playerCamera.localEulerAngles = 1 * verticalCameraVector;
+                this.verticalSwivel.localEulerAngles = 1 * verticalCameraVector;
             }
         }
         else
@@ -200,7 +202,8 @@ public class PlayerController : MonoBehaviour
         cameraPitch -= currentMouseDelta.y * mouseYCameraSensitivity;
 
         //Make sure that the user cannot move the camera higher than looking straight up or looking straight down:
-        cameraPitch = Mathf.Clamp(cameraPitch, -90.0f, 90.0f);
+
+        cameraPitch = Mathf.Clamp(cameraPitch, this.minimumVerticalClamp, this.maximumVerticalClamp);
 
         return Vector3.right * cameraPitch;
     }
