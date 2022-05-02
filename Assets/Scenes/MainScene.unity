@@ -333,6 +333,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8998047794715534504, guid: 87fd13b43aef00e4aad6f143c9df98b2, type: 3}
+      propertyPath: enableMidAirJumping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8998047794715534504, guid: 87fd13b43aef00e4aad6f143c9df98b2, type: 3}
       propertyPath: showDirectionIndicators
       value: 0
       objectReference: {fileID: 0}

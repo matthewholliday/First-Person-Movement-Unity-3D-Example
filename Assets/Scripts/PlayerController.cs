@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Jumping")]
     public bool enableJumping = true;
+    public bool enableMidAirJumping = false;
     public string jumpKey = "space";
     public float jumpVelocity = 10.0f;
 
@@ -143,12 +144,12 @@ public class PlayerController : MonoBehaviour
         if (controller.isGrounded)
         {
             this.velocityY = 0.0f;
+        }
 
-            //Only allow the player to jump IF they are touching the ground:
-            if (this.enableJumping && Input.GetKeyDown(this.jumpKey))
-            {
-                this.velocityY = ApplyJump(this.velocityY);
-            }
+        //Only allow the player to jump IF they are touching the ground:
+        if ((this.enableMidAirJumping || controller.isGrounded) && this.enableJumping && Input.GetKeyDown(this.jumpKey))
+        {
+            this.velocityY = ApplyJump(this.velocityY);
         }
 
         this.velocityY = ApplyGravity(this.velocityY);
