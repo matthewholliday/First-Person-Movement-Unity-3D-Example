@@ -165,7 +165,7 @@ public class PlayerController : MonoBehaviour
 
     private float ApplyGravity(float velocityY)
     {
-        return velocityY + this.forceOfGravity * Time.deltaTime;
+        return velocityY + this.forceOfGravity * 0.01f;
     }
 
     private void UpdateMouseLook()
