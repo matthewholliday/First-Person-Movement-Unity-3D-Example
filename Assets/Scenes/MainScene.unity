@@ -310,7 +310,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8998047794715534504, guid: 87fd13b43aef00e4aad6f143c9df98b2, type: 3}
       propertyPath: walkSpeed
-      value: 25
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8998047794715534504, guid: 87fd13b43aef00e4aad6f143c9df98b2, type: 3}
       propertyPath: slopeLimit
@@ -318,7 +318,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8998047794715534504, guid: 87fd13b43aef00e4aad6f143c9df98b2, type: 3}
       propertyPath: jumpVelocity
-      value: 25
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8998047794715534504, guid: 87fd13b43aef00e4aad6f143c9df98b2, type: 3}
       propertyPath: forceOfGravity
@@ -335,6 +335,14 @@ PrefabInstance:
     - target: {fileID: 8998047794715534504, guid: 87fd13b43aef00e4aad6f143c9df98b2, type: 3}
       propertyPath: enableMidAirJumping
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8998047794715534504, guid: 87fd13b43aef00e4aad6f143c9df98b2, type: 3}
+      propertyPath: maximumVerticalClamp
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 8998047794715534504, guid: 87fd13b43aef00e4aad6f143c9df98b2, type: 3}
+      propertyPath: minimumVerticalClamp
+      value: -80
       objectReference: {fileID: 0}
     - target: {fileID: 8998047794715534504, guid: 87fd13b43aef00e4aad6f143c9df98b2, type: 3}
       propertyPath: showDirectionIndicators
