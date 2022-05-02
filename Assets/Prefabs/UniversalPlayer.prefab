@@ -448,8 +448,8 @@ MonoBehaviour:
   displayPlayerBody: 0
   playerBody: {fileID: 8998047795708239127}
   cameraDirectionIndicator: {fileID: 788637167}
-  minimumVerticalClamp: -30
-  maximumVerticalClamp: 30
+  minimumVerticalClamp: -80
+  maximumVerticalClamp: 80
   playerCamera: {fileID: 8998047796006761709}
   rotatePlayerBodyWithCamera: 1
   verticalSwivel: {fileID: 8998047796066954019}
@@ -467,12 +467,13 @@ MonoBehaviour:
   rightDirectionIndicator: {fileID: 8998047794208493438}
   forwardsDirectionIndicator: {fileID: 8998047794018609876}
   backwardsDirectionIndicator: {fileID: 8998047794766033320}
-  forceOfGravity: -13
+  forceOfGravity: -15
   enableJumping: 1
+  enableMidAirJumping: 1
   jumpKey: space
-  jumpVelocity: 25
+  jumpVelocity: 100
   slopeLimit: 180
-  walkSpeed: 25
+  walkSpeed: 100
 --- !u!1 &8998047794766033320
 GameObject:
   m_ObjectHideFlags: 0

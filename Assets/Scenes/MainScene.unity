@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 614007355}
   - component: {fileID: 614007354}
   m_Layer: 0
-  m_Name: Ground
+  m_Name: Ground1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -292,11 +292,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &788637167 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 788637167, guid: 87fd13b43aef00e4aad6f143c9df98b2, type: 3}
-  m_PrefabInstance: {fileID: 8998047795006781132}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8998047795006781132
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -304,58 +299,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 788637167, guid: 87fd13b43aef00e4aad6f143c9df98b2, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8998047794715534504, guid: 87fd13b43aef00e4aad6f143c9df98b2, type: 3}
-      propertyPath: walkSpeed
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 8998047794715534504, guid: 87fd13b43aef00e4aad6f143c9df98b2, type: 3}
-      propertyPath: slopeLimit
-      value: 180
-      objectReference: {fileID: 0}
-    - target: {fileID: 8998047794715534504, guid: 87fd13b43aef00e4aad6f143c9df98b2, type: 3}
-      propertyPath: jumpVelocity
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 8998047794715534504, guid: 87fd13b43aef00e4aad6f143c9df98b2, type: 3}
-      propertyPath: forceOfGravity
-      value: -15
-      objectReference: {fileID: 0}
-    - target: {fileID: 8998047794715534504, guid: 87fd13b43aef00e4aad6f143c9df98b2, type: 3}
-      propertyPath: enableDebugMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8998047794715534504, guid: 87fd13b43aef00e4aad6f143c9df98b2, type: 3}
-      propertyPath: displayPlayerBody
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8998047794715534504, guid: 87fd13b43aef00e4aad6f143c9df98b2, type: 3}
-      propertyPath: enableMidAirJumping
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8998047794715534504, guid: 87fd13b43aef00e4aad6f143c9df98b2, type: 3}
-      propertyPath: maximumVerticalClamp
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 8998047794715534504, guid: 87fd13b43aef00e4aad6f143c9df98b2, type: 3}
-      propertyPath: minimumVerticalClamp
-      value: -80
-      objectReference: {fileID: 0}
-    - target: {fileID: 8998047794715534504, guid: 87fd13b43aef00e4aad6f143c9df98b2, type: 3}
-      propertyPath: showDirectionIndicators
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8998047794715534504, guid: 87fd13b43aef00e4aad6f143c9df98b2, type: 3}
-      propertyPath: cameraDirectionIndicator
-      value: 
-      objectReference: {fileID: 788637167}
-    - target: {fileID: 8998047794715534504, guid: 87fd13b43aef00e4aad6f143c9df98b2, type: 3}
-      propertyPath: rotatePlayerBodyWithCamera
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8998047794715534509, guid: 87fd13b43aef00e4aad6f143c9df98b2, type: 3}
       propertyPath: m_Name
       value: UniversalPlayer
@@ -402,10 +345,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8998047794715534511, guid: 87fd13b43aef00e4aad6f143c9df98b2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8998047795708239127, guid: 87fd13b43aef00e4aad6f143c9df98b2, type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
