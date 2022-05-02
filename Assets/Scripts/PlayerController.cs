@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Body")]
+    public bool displayPlayerBody = true;
+    public GameObject playerBody = null;
+    public GameObject cameraDirectionIndicator = null;
+
     [Header("Camera")]
     public float minimumVerticalClamp = -30.0f;
     public float maximumVerticalClamp = 30.0f;
@@ -73,12 +78,25 @@ public class PlayerController : MonoBehaviour
         if (this.enableDebugMode)
         {
             if (this.showDirectionIndicators) {
-                this.activateDirectionIndicators();
+                this.setDirectionIndicatorsActive(true);
+            } else
+            {
+                this.setDirectionIndicatorsActive(false);
             }
+        }
+
+        if (this.displayPlayerBody)
+        {
+            this.playerBody.SetActive(true);
+            this.cameraDirectionIndicator.SetActive(true);
+        } else
+        {
+            this.playerBody.SetActive(false);
+            this.cameraDirectionIndicator.SetActive(false);
         }
     }
 
-    private void activateDirectionIndicators()
+    private void setDirectionIndicatorsActive(bool isActive)
     {
         GameObject[] directionIndicators = new GameObject[] {
             this.rightDirectionIndicator,
@@ -88,7 +106,7 @@ public class PlayerController : MonoBehaviour
         };
         foreach(GameObject directionIndicator in directionIndicators)
         {
-            directionIndicator.SetActive(true);
+            directionIndicator.SetActive(isActive);
         }
     }
 
