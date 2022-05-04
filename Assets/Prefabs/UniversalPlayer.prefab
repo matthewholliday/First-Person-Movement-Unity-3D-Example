@@ -445,7 +445,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9324969aeae42f44a9b881b393cf0ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayPlayerBody: 0
+  displayPlayerBody: 1
   playerBody: {fileID: 8998047795708239127}
   cameraDirectionIndicator: {fileID: 788637167}
   minimumVerticalClamp: -80
@@ -455,25 +455,26 @@ MonoBehaviour:
   verticalSwivel: {fileID: 8998047796066954019}
   horizontalSwivel: {fileID: 8998047796011140394}
   controller: {fileID: 8998047794715534510}
+  enableCursorHorizontalRotation: 1
   lockCursor: 1
   mousePlayerRotationSensitivity: 10
   enableMouseXAxisControl: 1
   mouseXCameraSensitivity: 50
   enableMouseYAxisControl: 1
   mouseYCameraSensitivity: 3.5
-  enableDebugMode: 0
-  showDirectionIndicators: 0
+  enableDebugMode: 1
+  showDirectionIndicators: 1
   leftDirectionIndicator: {fileID: 8998047795079168976}
   rightDirectionIndicator: {fileID: 8998047794208493438}
   forwardsDirectionIndicator: {fileID: 8998047794018609876}
   backwardsDirectionIndicator: {fileID: 8998047794766033320}
-  forceOfGravity: -15
+  forceOfGravity: -13
   enableJumping: 1
-  enableMidAirJumping: 1
+  enableMidAirJumping: 0
   jumpKey: space
-  jumpVelocity: 100
-  slopeLimit: 180
-  walkSpeed: 100
+  jumpVelocity: 10
+  slopeLimit: 45
+  walkSpeed: 6
 --- !u!1 &8998047794766033320
 GameObject:
   m_ObjectHideFlags: 0

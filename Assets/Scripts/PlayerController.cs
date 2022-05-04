@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     public CharacterController controller = null;
 
     [Header("Cursor")]
+    public bool enableCursorHorizontalRotation = true;
     public bool lockCursor = true;
     public float mousePlayerRotationSensitivity = 10.0f;
     public bool enableMouseXAxisControl = true;
@@ -229,14 +230,37 @@ public class PlayerController : MonoBehaviour
     }
     
     private Vector3 RotateCameraHorizontally(ref Vector2 currentMouseDelta)
-    {        
-        float cameraRotation = currentMouseDelta.x * mouseXCameraSensitivity;
+    {
+        float cameraRotation = 0.0f;
+        if (this.enableCursorHorizontalRotation)
+        {
+            cameraRotation = currentMouseDelta.x * mouseXCameraSensitivity;
+        } else if(Input.GetButton("RotateRight"))
+        {
+            cameraRotation = mouseXCameraSensitivity * Time.deltaTime;
+        } else if (Input.GetButton("RotateLeft"))
+        {
+            cameraRotation = -1 * mouseXCameraSensitivity * Time.deltaTime;
+        }
         return Vector3.up * cameraRotation;
     }
 
     private void RotatePlayerHorizontally (ref Vector2 currentMouseDelta)
     {
         //Rotate horizontally (i.e., AROUND the up axis) using the horizontal mouse delta:
-        transform.Rotate(Vector3.up * currentMouseDelta.x * mousePlayerRotationSensitivity);
+
+
+        if (this.enableCursorHorizontalRotation)
+        {
+            transform.Rotate(Vector3.up * currentMouseDelta.x * mousePlayerRotationSensitivity);
+        }
+        else if (Input.GetButton("RotateRight"))
+        {
+            transform.Rotate(Vector3.up * mouseXCameraSensitivity * Time.deltaTime);
+        }
+        else if (Input.GetButton("RotateLeft"))
+        {
+            transform.Rotate(Vector3.up * -1 * mouseXCameraSensitivity * Time.deltaTime);
+        }
     }
 }
