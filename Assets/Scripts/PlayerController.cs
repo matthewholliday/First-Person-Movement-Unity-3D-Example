@@ -10,10 +10,15 @@ public class PlayerController : MonoBehaviour
     public GameObject cameraDirectionIndicator = null;
 
     [Header("Camera")]
+    public bool enableCursorCameraRotationY = true;
+    public bool enableKeyboardCameraRotationY = false;
+
+    public bool enableCursorCameraRotationX = true;
+    public bool enableKeyboardCameraRotationX = true;
+
     public float minimumVerticalClamp = -30.0f;
     public float maximumVerticalClamp = 30.0f;
     public Transform playerCamera = null;
-    public bool rotatePlayerBodyWithCamera = true;
     public Transform verticalSwivel = null;
     public Transform horizontalSwivel = null;
 
@@ -21,7 +26,6 @@ public class PlayerController : MonoBehaviour
     public CharacterController controller = null;
 
     [Header("Cursor")]
-    public bool enableCursorHorizontalRotation = true;
     public bool lockCursor = true;
     public float mousePlayerRotationSensitivity = 10.0f;
     public bool enableMouseXAxisControl = true;
@@ -45,6 +49,10 @@ public class PlayerController : MonoBehaviour
     public bool enableMidAirJumping = false;
     public string jumpKey = "space";
     public float jumpVelocity = 10.0f;
+
+    [Header("Navigation")]
+    public bool enableCursorPlayerRotationY = false;
+    public bool enableKeyboardPlayerRotationY = false;
 
     [Header("Walk Settings")]
     public float slopeLimit = 45.0f;
@@ -177,33 +185,15 @@ public class PlayerController : MonoBehaviour
 
         currentMouseDelta = Vector2.SmoothDamp(currentMouseDelta, targetMouseDelta, ref currentMouseDeltaVelocity, mouseSmoothTime);
 
-
-        if (this.rotatePlayerBodyWithCamera)
+        if (this.enableMouseXAxisControl)
         {
-            if (this.enableMouseXAxisControl)
-            {
-                this.RotatePlayerHorizontally(ref currentMouseDelta);
-            }
-            if (this.enableMouseYAxisControl)
-            {
-                Vector3 verticalCameraVector = this.RotateCameraVertically(ref currentMouseDelta);
-                this.verticalSwivel.localEulerAngles = 1 * verticalCameraVector;
-            }
+            this.RotatePlayerHorizontally(ref currentMouseDelta);
         }
-        else
+        if (this.enableMouseYAxisControl)
         {
-            if (this.enableMouseXAxisControl)
-            {
-                Vector3 horizontalCameraVector = this.RotateCameraHorizontally(ref currentMouseDelta);
-                this.horizontalSwivel.Rotate(horizontalCameraVector);
-            }
-            if (this.enableMouseYAxisControl){
-                Vector3 verticalCameraVector = this.RotateCameraVertically(ref currentMouseDelta);
-                this.verticalSwivel.localEulerAngles = verticalCameraVector;
-
-            }
+            Vector3 verticalCameraVector = this.RotateCameraVertically(ref currentMouseDelta);
+            this.verticalSwivel.localEulerAngles = 1 * verticalCameraVector;
         }
-
     }
 
     private Vector2 getMouseDelta()
@@ -216,15 +206,18 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 RotateCameraVertically(ref Vector2 currentMouseDelta)
     {
-        /*
-        Negative degrees pushes the camera UPWARDS, so we want to invert the mouse value so that the camera does not pitch in the 
-        opposite direction of the cursor's movement:
-        */
-        cameraPitch -= currentMouseDelta.y * mouseYCameraSensitivity;
+        if (this.enableCursorCameraRotationX)
+        {
+            /*
+            Negative degrees pushes the camera UPWARDS, so we want to invert the mouse value so that the camera does not pitch in the 
+            opposite direction of the cursor's movement:
+            */
+            this.cameraPitch -= currentMouseDelta.y * mouseYCameraSensitivity;
 
-        //Make sure that the user cannot move the camera higher than looking straight up or looking straight down:
+            //Make sure that the user cannot move the camera higher than looking straight up or looking straight down:
 
-        cameraPitch = Mathf.Clamp(cameraPitch, this.minimumVerticalClamp, this.maximumVerticalClamp);
+            this.cameraPitch = Mathf.Clamp(cameraPitch, this.minimumVerticalClamp, this.maximumVerticalClamp);
+        }
 
         return Vector3.right * cameraPitch;
     }
@@ -232,16 +225,14 @@ public class PlayerController : MonoBehaviour
     private Vector3 RotateCameraHorizontally(ref Vector2 currentMouseDelta)
     {
         float cameraRotation = 0.0f;
-        if (this.enableCursorHorizontalRotation)
+        if (this.enableCursorCameraRotationY)
         {
             cameraRotation = currentMouseDelta.x * mouseXCameraSensitivity;
-        } else if(Input.GetButton("RotateRight"))
-        {
-            cameraRotation = mouseXCameraSensitivity * Time.deltaTime;
-        } else if (Input.GetButton("RotateLeft"))
-        {
-            cameraRotation = -1 * mouseXCameraSensitivity * Time.deltaTime;
         }
+        if (this.enableKeyboardCameraRotationY)
+        {
+            cameraRotation = Input.GetAxis("Rotate") * mouseXCameraSensitivity * Time.deltaTime;
+        } 
         return Vector3.up * cameraRotation;
     }
 
@@ -250,17 +241,13 @@ public class PlayerController : MonoBehaviour
         //Rotate horizontally (i.e., AROUND the up axis) using the horizontal mouse delta:
 
 
-        if (this.enableCursorHorizontalRotation)
+        if (this.enableCursorPlayerRotationY)
         {
             transform.Rotate(Vector3.up * currentMouseDelta.x * mousePlayerRotationSensitivity);
         }
-        else if (Input.GetButton("RotateRight"))
+        else if (this.enableKeyboardPlayerRotationY)
         {
-            transform.Rotate(Vector3.up * mouseXCameraSensitivity * Time.deltaTime);
-        }
-        else if (Input.GetButton("RotateLeft"))
-        {
-            transform.Rotate(Vector3.up * -1 * mouseXCameraSensitivity * Time.deltaTime);
+            transform.Rotate(Vector3.up * Input.GetAxis("Rotate") *  mouseXCameraSensitivity * Time.deltaTime);
         }
     }
 }
